@@ -2,7 +2,7 @@
 # Maintainer: dai9ah <dai9ah@protonmail.com>
 pkgname=2bwm
 pkgver=0.2
-pkgrel=0
+pkgrel=1
 pkgdesc="Fast floating window manager"
 url="https://github.com/venam/2bwm"
 arch="all"
