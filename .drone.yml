@@ -1,0 +1,21 @@
+---
+kind: pipeline
+name: abuild
+
+clone:
+  depth: 10
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build
+    image: clandmeter/abuild:latest
+    privileged: true
+    pull: always
+
+trigger:
+  event:
+    - pull_request
+
