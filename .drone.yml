@@ -12,7 +12,7 @@ platform:
 steps:
   - name: build
     image: clandmeter/abuild:latest
-    privileged: true
+    privileged: false
     pull: always
 
 trigger:
