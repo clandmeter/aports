@@ -12,6 +12,9 @@ platform:
 steps:
   - name: build
     image: clandmeter/abuild:latest
+    environment:
+        GH_TOKEN:
+            from_secret: github_token
     privileged: false
     pull: always
 
