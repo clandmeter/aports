@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: abuild
+name: x86
 
 clone:
   depth: 10
@@ -11,14 +11,207 @@ platform:
 
 steps:
   - name: build
-    image: clandmeter/abuild:latest
+    image: clandmeter/alpine-drone-ci:x86
+    commands:
+      - build.sh
+      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/x86
+      - sudo cp "$HOME"/packages/*/x86/*.apk /tmp/packages/$DRONE_PULL_REQUEST/x86
     environment:
-        GH_TOKEN:
-            from_secret: github_token
+      GH_TOKEN:
+        from_secret: github_token
+      ABUILD_PRIV_KEY:
+        from_secret: abuild_privkey
+      ABUILD_PUB_KEY:
+        from_secret: abuild_pubkey
     privileged: false
     pull: always
+    volumes:
+      - name: packages
+        path: /tmp/packages
+  - name: publish
+    image: clandmeter/alpine-drone-ci:x86
+    commands:
+      - publish.sh x86
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+      SSH_HOST_KEY:
+        from_secret: ssh_host_key
+      MQTT_PASS:
+        from_secret: mqtt_pass
+    volumes:
+      - name: packages
+        path: /tmp/packages
+
+volumes:
+  - name: packages
+    temp: {}
 
 trigger:
   event:
     - pull_request
 
+---
+kind: pipeline
+name: x86_64
+
+clone:
+  depth: 10
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build
+    image: clandmeter/alpine-drone-ci:x86_64
+    commands:
+      - build.sh
+      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/x86_64
+      - sudo cp "$HOME"/packages/*/x86_64/*.apk /tmp/packages/$DRONE_PULL_REQUEST/x86_64
+    environment:
+      GH_TOKEN:
+        from_secret: github_token
+      ABUILD_PRIV_KEY:
+        from_secret: abuild_privkey
+      ABUILD_PUB_KEY:
+        from_secret: abuild_pubkey
+    privileged: false
+    pull: always
+    volumes:
+      - name: packages
+        path: /tmp/packages
+  - name: publish
+    image: clandmeter/alpine-drone-ci:x86_64
+    commands:
+      - publish.sh x86_64
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+      SSH_HOST_KEY:
+        from_secret: ssh_host_key
+      MQTT_PASS:
+        from_secret: mqtt_pass
+    volumes:
+      - name: packages
+        path: /tmp/packages
+
+volumes:
+  - name: packages
+    temp: {}
+
+trigger:
+  event:
+    - pull_request
+
+---
+kind: pipeline
+name: aarch64
+
+clone:
+  depth: 10
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build
+    image: clandmeter/alpine-drone-ci:aarch64
+    commands:
+      - build.sh
+      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/aarch64
+      - sudo cp "$HOME"/packages/*/aarch64/*.apk /tmp/packages/$DRONE_PULL_REQUEST/aarch64
+    environment:
+      GH_TOKEN:
+        from_secret: github_token
+      ABUILD_PRIV_KEY:
+        from_secret: abuild_privkey
+      ABUILD_PUB_KEY:
+        from_secret: abuild_pubkey
+    privileged: false
+    pull: always
+    volumes:
+      - name: packages
+        path: /tmp/packages
+  - name: publish
+    image: clandmeter/alpine-drone-ci:aarch64
+    commands:
+      - publish.sh aarch64
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+      SSH_HOST_KEY:
+        from_secret: ssh_host_key
+      MQTT_PASS:
+        from_secret: mqtt_pass
+    volumes:
+      - name: packages
+        path: /tmp/packages
+
+volumes:
+  - name: packages
+    temp: {}
+
+trigger:
+  event:
+    - pull_request
+
+---
+kind: pipeline
+name: armhf
+
+clone:
+  depth: 10
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: build
+    image: clandmeter/alpine-drone-ci:armhf
+    commands:
+      - build.sh
+      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/armhf
+      - sudo cp "$HOME"/packages/*/armhf/*.apk /tmp/packages/$DRONE_PULL_REQUEST/armhf
+    environment:
+      GH_TOKEN:
+        from_secret: github_token
+      ABUILD_PRIV_KEY:
+        from_secret: abuild_privkey
+      ABUILD_PUB_KEY:
+        from_secret: abuild_pubkey
+    privileged: false
+    pull: always
+    volumes:
+      - name: packages
+        path: /tmp/packages
+  - name: publish
+    image: clandmeter/alpine-drone-ci:armhf
+    commands:
+      - publish.sh armhf
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+      SSH_HOST_KEY:
+        from_secret: ssh_host_key
+      MQTT_PASS:
+        from_secret: mqtt_pass
+    volumes:
+      - name: packages
+        path: /tmp/packages
+
+volumes:
+  - name: packages
+    temp: {}
+
+trigger:
+  event:
+    - pull_request
+
+---
+kind: signature
+hmac: fb0480117986339e398cef43b5d3c83cebe44172b11c621613d65002a3d2615d
+
+...
