@@ -9,13 +9,15 @@ platform:
   os: linux
   arch: amd64
 
+workspace:
+  base: /home/buildozer/drone
+  path: aports
+
 steps:
   - name: build
     image: clandmeter/alpine-drone-ci:x86
     commands:
       - build.sh
-      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/x86
-      - sudo cp "$HOME"/packages/*/x86/*.apk /tmp/packages/$DRONE_PULL_REQUEST/x86
     environment:
       GH_TOKEN:
         from_secret: github_token
@@ -25,9 +27,6 @@ steps:
         from_secret: abuild_pubkey
     privileged: false
     pull: always
-    volumes:
-      - name: packages
-        path: /tmp/packages
   - name: publish
     image: clandmeter/alpine-drone-ci:x86
     commands:
@@ -39,13 +38,6 @@ steps:
         from_secret: ssh_host_key
       MQTT_PASS:
         from_secret: mqtt_pass
-    volumes:
-      - name: packages
-        path: /tmp/packages
-
-volumes:
-  - name: packages
-    temp: {}
 
 trigger:
   event:
@@ -62,13 +54,15 @@ platform:
   os: linux
   arch: amd64
 
+workspace:
+  base: /home/buildozer/drone
+  path: aports
+
 steps:
   - name: build
     image: clandmeter/alpine-drone-ci:x86_64
     commands:
       - build.sh
-      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/x86_64
-      - sudo cp "$HOME"/packages/*/x86_64/*.apk /tmp/packages/$DRONE_PULL_REQUEST/x86_64
     environment:
       GH_TOKEN:
         from_secret: github_token
@@ -78,9 +72,6 @@ steps:
         from_secret: abuild_pubkey
     privileged: false
     pull: always
-    volumes:
-      - name: packages
-        path: /tmp/packages
   - name: publish
     image: clandmeter/alpine-drone-ci:x86_64
     commands:
@@ -92,13 +83,6 @@ steps:
         from_secret: ssh_host_key
       MQTT_PASS:
         from_secret: mqtt_pass
-    volumes:
-      - name: packages
-        path: /tmp/packages
-
-volumes:
-  - name: packages
-    temp: {}
 
 trigger:
   event:
@@ -115,13 +99,15 @@ platform:
   os: linux
   arch: arm64
 
+workspace:
+  base: /home/buildozer/drone
+  path: aports
+
 steps:
   - name: build
     image: clandmeter/alpine-drone-ci:aarch64
     commands:
       - build.sh
-      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/aarch64
-      - sudo cp "$HOME"/packages/*/aarch64/*.apk /tmp/packages/$DRONE_PULL_REQUEST/aarch64
     environment:
       GH_TOKEN:
         from_secret: github_token
@@ -131,9 +117,6 @@ steps:
         from_secret: abuild_pubkey
     privileged: false
     pull: always
-    volumes:
-      - name: packages
-        path: /tmp/packages
   - name: publish
     image: clandmeter/alpine-drone-ci:aarch64
     commands:
@@ -145,13 +128,6 @@ steps:
         from_secret: ssh_host_key
       MQTT_PASS:
         from_secret: mqtt_pass
-    volumes:
-      - name: packages
-        path: /tmp/packages
-
-volumes:
-  - name: packages
-    temp: {}
 
 trigger:
   event:
@@ -168,13 +144,15 @@ platform:
   os: linux
   arch: arm
 
+workspace:
+  base: /home/buildozer/drone
+  path: aports
+
 steps:
   - name: build
     image: clandmeter/alpine-drone-ci:armhf
     commands:
       - build.sh
-      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/armhf
-      - sudo cp "$HOME"/packages/*/armhf/*.apk /tmp/packages/$DRONE_PULL_REQUEST/armhf
     environment:
       GH_TOKEN:
         from_secret: github_token
@@ -184,9 +162,6 @@ steps:
         from_secret: abuild_pubkey
     privileged: false
     pull: always
-    volumes:
-      - name: packages
-        path: /tmp/packages
   - name: publish
     image: clandmeter/alpine-drone-ci:armhf
     commands:
@@ -198,13 +173,6 @@ steps:
         from_secret: ssh_host_key
       MQTT_PASS:
         from_secret: mqtt_pass
-    volumes:
-      - name: packages
-        path: /tmp/packages
-
-volumes:
-  - name: packages
-    temp: {}
 
 trigger:
   event:
@@ -221,13 +189,15 @@ platform:
   os: linux
   arch: arm
 
+workspace:
+  base: /home/buildozer/drone
+  path: aports
+
 steps:
   - name: build
     image: clandmeter/alpine-drone-ci:armv7
     commands:
       - build.sh
-      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/armv7
-      - sudo cp "$HOME"/packages/*/armv7/*.apk /tmp/packages/$DRONE_PULL_REQUEST/armv7
     environment:
       GH_TOKEN:
         from_secret: github_token
@@ -237,9 +207,6 @@ steps:
         from_secret: abuild_pubkey
     privileged: false
     pull: always
-    volumes:
-      - name: packages
-        path: /tmp/packages
   - name: publish
     image: clandmeter/alpine-drone-ci:armv7
     commands:
@@ -251,13 +218,6 @@ steps:
         from_secret: ssh_host_key
       MQTT_PASS:
         from_secret: mqtt_pass
-    volumes:
-      - name: packages
-        path: /tmp/packages
-
-volumes:
-  - name: packages
-    temp: {}
 
 trigger:
   event:
