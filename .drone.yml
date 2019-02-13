@@ -273,7 +273,7 @@ clone:
 steps:
   - name: comment_pr
     image: gboo/github-pr
-    setttings:
+    settings:
       github_token:
         from_secret: github_token
       action: comment
