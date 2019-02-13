@@ -272,16 +272,12 @@ clone:
 
 steps:
   - name: comment_pr
-    image: plugins/webhook
-    environment:
-      GH_TOKEN:
-        from_secret: github_token
-    settings:
-      urls: https://api.github.com/repos/clandmeter/aports/issues/$DRONE_PULL_REQUEST/comments?access_token=$GH_TOKEN
-      template: |
-        { "body": "Build artifacts are uploaded. You can add the following url to your /etc/apk/repositories file
-          http://ua.alpinelinux.org/packages/$DRONE_PULL_REQUEST" }
-      content_type: application/json
+    image: gboo/github-pr
+    secrets: [ github_token ]
+    action: comment
+    template: |
+        Build artifacts are uploaded. You can add the following url to your /etc/apk/repositories file
+        http://ua.alpinelinux.org/packages/$DRONE_PULL_REQUEST
 
 depends_on:
   - x86
