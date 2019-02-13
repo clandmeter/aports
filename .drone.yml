@@ -211,6 +211,59 @@ trigger:
     - pull_request
 
 ---
+kind: pipeline
+name: armv7
+
+clone:
+  depth: 10
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: build
+    image: clandmeter/alpine-drone-ci:armv7
+    commands:
+      - build.sh
+      - sudo mkdir -p /tmp/packages/$DRONE_PULL_REQUEST/armv7
+      - sudo cp "$HOME"/packages/*/armv7/*.apk /tmp/packages/$DRONE_PULL_REQUEST/armv7
+    environment:
+      GH_TOKEN:
+        from_secret: github_token
+      ABUILD_PRIV_KEY:
+        from_secret: abuild_privkey
+      ABUILD_PUB_KEY:
+        from_secret: abuild_pubkey
+    privileged: false
+    pull: always
+    volumes:
+      - name: packages
+        path: /tmp/packages
+  - name: publish
+    image: clandmeter/alpine-drone-ci:armv7
+    commands:
+      - publish.sh armv7
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+      SSH_HOST_KEY:
+        from_secret: ssh_host_key
+      MQTT_PASS:
+        from_secret: mqtt_pass
+    volumes:
+      - name: packages
+        path: /tmp/packages
+
+volumes:
+  - name: packages
+    temp: {}
+
+trigger:
+  event:
+    - pull_request
+
+---
 kind: signature
 hmac: fb0480117986339e398cef43b5d3c83cebe44172b11c621613d65002a3d2615d
 
