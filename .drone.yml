@@ -275,7 +275,7 @@ steps:
     image: gboo/github-pr
     settings:
       github_token:
-        from_secret: github_token
+        from_secret: algitbot_token
       action: comment
       message: |
         Build artifacts are uploaded. You can add the following url to your /etc/apk/repositories file
