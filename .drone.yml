@@ -273,11 +273,15 @@ clone:
 steps:
   - name: comment_pr
     image: gboo/github-pr
-    secrets: [ github_token ]
-    action: comment
-    template: |
+    setttings:
+      github_token:
+        from_secret: github_token
+      action: comment
+      message: |
         Build artifacts are uploaded. You can add the following url to your /etc/apk/repositories file
         http://ua.alpinelinux.org/packages/$DRONE_PULL_REQUEST
+    when:
+      event: pull_request
 
 depends_on:
   - x86
