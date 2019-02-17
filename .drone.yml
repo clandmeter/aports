@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: x86
+name: edge-x86
 
 clone:
   depth: 10
@@ -15,7 +15,7 @@ workspace:
 
 steps:
   - name: build
-    image: clandmeter/alpine-drone-ci:x86
+    image: clandmeter/alpine-drone-ci:edge-x86
     commands:
       - build.sh
     environment:
@@ -28,9 +28,9 @@ steps:
     privileged: false
     pull: always
   - name: publish
-    image: clandmeter/alpine-drone-ci:x86
+    image: clandmeter/alpine-drone-ci:edge-x86
     commands:
-      - publish.sh x86
+      - publish.sh
     environment:
       SSH_KEY:
         from_secret: ssh_key
@@ -45,7 +45,7 @@ trigger:
 
 ---
 kind: pipeline
-name: x86_64
+name: edge-x86_64
 
 clone:
   depth: 10
@@ -60,7 +60,7 @@ workspace:
 
 steps:
   - name: build
-    image: clandmeter/alpine-drone-ci:x86_64
+    image: clandmeter/alpine-drone-ci:edge-x86_64
     commands:
       - build.sh
     environment:
@@ -73,9 +73,9 @@ steps:
     privileged: false
     pull: always
   - name: publish
-    image: clandmeter/alpine-drone-ci:x86_64
+    image: clandmeter/alpine-drone-ci:edge-x86_64
     commands:
-      - publish.sh x86_64
+      - publish.sh
     environment:
       SSH_KEY:
         from_secret: ssh_key
@@ -90,7 +90,7 @@ trigger:
 
 ---
 kind: pipeline
-name: aarch64
+name: edge-aarch64
 
 clone:
   depth: 10
@@ -105,7 +105,7 @@ workspace:
 
 steps:
   - name: build
-    image: clandmeter/alpine-drone-ci:aarch64
+    image: clandmeter/alpine-drone-ci:edge-aarch64
     commands:
       - build.sh
     environment:
@@ -118,9 +118,9 @@ steps:
     privileged: false
     pull: always
   - name: publish
-    image: clandmeter/alpine-drone-ci:aarch64
+    image: clandmeter/alpine-drone-ci:edge-aarch64
     commands:
-      - publish.sh aarch64
+      - publish.sh
     environment:
       SSH_KEY:
         from_secret: ssh_key
@@ -135,7 +135,7 @@ trigger:
 
 ---
 kind: pipeline
-name: armhf
+name: edge-armhf
 
 clone:
   depth: 10
@@ -150,7 +150,7 @@ workspace:
 
 steps:
   - name: build
-    image: clandmeter/alpine-drone-ci:armhf
+    image: clandmeter/alpine-drone-ci:edge-armhf
     commands:
       - build.sh
     environment:
@@ -163,9 +163,9 @@ steps:
     privileged: false
     pull: always
   - name: publish
-    image: clandmeter/alpine-drone-ci:armhf
+    image: clandmeter/alpine-drone-ci:edge-armhf
     commands:
-      - publish.sh armhf
+      - publish.sh
     environment:
       SSH_KEY:
         from_secret: ssh_key
@@ -180,7 +180,7 @@ trigger:
 
 ---
 kind: pipeline
-name: armv7
+name: edge-armv7
 
 clone:
   depth: 10
@@ -195,7 +195,7 @@ workspace:
 
 steps:
   - name: build
-    image: clandmeter/alpine-drone-ci:armv7
+    image: clandmeter/alpine-drone-ci:edge-armv7
     commands:
       - build.sh
     environment:
@@ -208,9 +208,9 @@ steps:
     privileged: false
     pull: always
   - name: publish
-    image: clandmeter/alpine-drone-ci:armv7
+    image: clandmeter/alpine-drone-ci:edge-armv7
     commands:
-      - publish.sh armv7
+      - publish.sh
     environment:
       SSH_KEY:
         from_secret: ssh_key
@@ -244,11 +244,11 @@ steps:
       event: pull_request
 
 depends_on:
-  - x86
-  - x86_64
-  - armhf
-  - armv7
-  - aarch64
+  - edge-x86
+  - edge-x86_64
+  - edge-armhf
+  - edge-armv7
+  - edge-aarch64
 
 ---
 kind: signature
