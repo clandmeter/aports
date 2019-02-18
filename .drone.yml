@@ -25,7 +25,6 @@ steps:
         from_secret: abuild_privkey
       ABUILD_PUB_KEY:
         from_secret: abuild_pubkey
-    privileged: false
     pull: always
   - name: publish
     image: clandmeter/alpine-drone-ci-publish:x86
@@ -36,6 +35,7 @@ steps:
         from_secret: ssh_key
       MQTT_PASS:
         from_secret: mqtt_pass
+    pull: always
 
 trigger:
   event:
@@ -68,7 +68,6 @@ steps:
         from_secret: abuild_privkey
       ABUILD_PUB_KEY:
         from_secret: abuild_pubkey
-    privileged: false
     pull: always
   - name: publish
     image: clandmeter/alpine-drone-ci-publish:x86_64
@@ -79,6 +78,7 @@ steps:
         from_secret: ssh_key
       MQTT_PASS:
         from_secret: mqtt_pass
+    pull: always
 
 trigger:
   event:
@@ -111,7 +111,6 @@ steps:
         from_secret: abuild_privkey
       ABUILD_PUB_KEY:
         from_secret: abuild_pubkey
-    privileged: false
     pull: always
   - name: publish
     image: clandmeter/alpine-drone-ci-publish:aarch64
@@ -122,6 +121,7 @@ steps:
         from_secret: ssh_key
       MQTT_PASS:
         from_secret: mqtt_pass
+    pull: always
 
 trigger:
   event:
@@ -154,7 +154,6 @@ steps:
         from_secret: abuild_privkey
       ABUILD_PUB_KEY:
         from_secret: abuild_pubkey
-    privileged: false
     pull: always
   - name: publish
     image: clandmeter/alpine-drone-ci-publish:armhf
@@ -165,6 +164,7 @@ steps:
         from_secret: ssh_key
       MQTT_PASS:
         from_secret: mqtt_pass
+    pull: always
 
 trigger:
   event:
@@ -197,7 +197,6 @@ steps:
         from_secret: abuild_privkey
       ABUILD_PUB_KEY:
         from_secret: abuild_pubkey
-    privileged: false
     pull: always
   - name: publish
     image: clandmeter/alpine-drone-ci-publish:armv7
@@ -208,6 +207,7 @@ steps:
         from_secret: ssh_key
       MQTT_PASS:
         from_secret: mqtt_pass
+    pull: always
 
 trigger:
   event:
