@@ -3,7 +3,7 @@ kind: pipeline
 name: edge-x86
 
 clone:
-  depth: 10
+  depth: 50
 
 platform:
   os: linux
@@ -21,20 +21,6 @@ steps:
     environment:
       GH_TOKEN:
         from_secret: algitbot_token
-      ABUILD_PRIV_KEY:
-        from_secret: abuild_privkey
-      ABUILD_PUB_KEY:
-        from_secret: abuild_pubkey
-    pull: always
-  - name: publish
-    image: clandmeter/alpine-drone-ci-publish:x86
-    commands:
-      - publish.sh
-    environment:
-      SSH_KEY:
-        from_secret: ssh_key
-      MQTT_PASS:
-        from_secret: mqtt_pass
     pull: always
 
 trigger:
@@ -46,7 +32,7 @@ kind: pipeline
 name: edge-x86_64
 
 clone:
-  depth: 10
+  depth: 50
 
 platform:
   os: linux
@@ -64,20 +50,6 @@ steps:
     environment:
       GH_TOKEN:
         from_secret: algitbot_token
-      ABUILD_PRIV_KEY:
-        from_secret: abuild_privkey
-      ABUILD_PUB_KEY:
-        from_secret: abuild_pubkey
-    pull: always
-  - name: publish
-    image: clandmeter/alpine-drone-ci-publish:x86_64
-    commands:
-      - publish.sh
-    environment:
-      SSH_KEY:
-        from_secret: ssh_key
-      MQTT_PASS:
-        from_secret: mqtt_pass
     pull: always
 
 trigger:
@@ -89,7 +61,7 @@ kind: pipeline
 name: edge-aarch64
 
 clone:
-  depth: 10
+  depth: 50
 
 platform:
   os: linux
@@ -107,20 +79,6 @@ steps:
     environment:
       GH_TOKEN:
         from_secret: algitbot_token
-      ABUILD_PRIV_KEY:
-        from_secret: abuild_privkey
-      ABUILD_PUB_KEY:
-        from_secret: abuild_pubkey
-    pull: always
-  - name: publish
-    image: clandmeter/alpine-drone-ci-publish:aarch64
-    commands:
-      - publish.sh
-    environment:
-      SSH_KEY:
-        from_secret: ssh_key
-      MQTT_PASS:
-        from_secret: mqtt_pass
     pull: always
 
 trigger:
@@ -132,7 +90,7 @@ kind: pipeline
 name: edge-armhf
 
 clone:
-  depth: 10
+  depth: 50
 
 platform:
   os: linux
@@ -150,20 +108,6 @@ steps:
     environment:
       GH_TOKEN:
         from_secret: algitbot_token
-      ABUILD_PRIV_KEY:
-        from_secret: abuild_privkey
-      ABUILD_PUB_KEY:
-        from_secret: abuild_pubkey
-    pull: always
-  - name: publish
-    image: clandmeter/alpine-drone-ci-publish:armhf
-    commands:
-      - publish.sh
-    environment:
-      SSH_KEY:
-        from_secret: ssh_key
-      MQTT_PASS:
-        from_secret: mqtt_pass
     pull: always
 
 trigger:
@@ -175,7 +119,7 @@ kind: pipeline
 name: edge-armv7
 
 clone:
-  depth: 10
+  depth: 50
 
 platform:
   os: linux
@@ -193,52 +137,11 @@ steps:
     environment:
       GH_TOKEN:
         from_secret: algitbot_token
-      ABUILD_PRIV_KEY:
-        from_secret: abuild_privkey
-      ABUILD_PUB_KEY:
-        from_secret: abuild_pubkey
-    pull: always
-  - name: publish
-    image: clandmeter/alpine-drone-ci-publish:armv7
-    commands:
-      - publish.sh
-    environment:
-      SSH_KEY:
-        from_secret: ssh_key
-      MQTT_PASS:
-        from_secret: mqtt_pass
     pull: always
 
 trigger:
   event:
     - pull_request
-
----
-kind: pipeline
-name: announce
-
-clone:
-  disable: true
-
-steps:
-  - name: comment_pr
-    image: gboo/github-pr
-    settings:
-      github_token:
-        from_secret: algitbot_token
-      action: comment
-      message: |
-        Build artifacts are uploaded. You can add the following url to your /etc/apk/repositories file
-        http://ua.alpinelinux.org/packages/${DRONE_REPO}/${DRONE_PULL_REQUEST}
-    when:
-      event: pull_request
-
-depends_on:
-  - edge-x86
-  - edge-x86_64
-  - edge-armhf
-  - edge-armv7
-  - edge-aarch64
 
 ---
 kind: signature
